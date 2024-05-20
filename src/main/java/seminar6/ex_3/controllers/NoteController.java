@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import seminar6.ex_3.aspects.TrackNoteAction;
 import seminar6.ex_3.domain.Note;
 import seminar6.ex_3.repositories.NoteRepository;
 
@@ -24,6 +25,7 @@ public class NoteController {
      * @return запись
      */
     @PostMapping
+    @TrackNoteAction
     public ResponseEntity<Note> createNote(@RequestBody Note note){
         return new ResponseEntity<>(noteRepository.save(note), HttpStatus.CREATED);
     }
@@ -34,6 +36,7 @@ public class NoteController {
      * @return список всех записей
      */
     @GetMapping
+    @TrackNoteAction
     public ResponseEntity<List<Note>> getAllNotes(){
         return new ResponseEntity<>(noteRepository.findAll(), HttpStatus.OK);
     }
@@ -45,6 +48,7 @@ public class NoteController {
      * @return запись
      */
     @GetMapping("/{id}")
+    @TrackNoteAction
     public ResponseEntity<Note> getNoteById(@PathVariable Long id){
         Optional<Note> foundNote = noteRepository.findTaskById(id);
         if(foundNote.isPresent()){
@@ -62,6 +66,7 @@ public class NoteController {
      * @return видоизмененная запись
      */
     @PutMapping("/{id}")
+    @TrackNoteAction
     public ResponseEntity<Note> editNote(@PathVariable Long id, @RequestBody Note note){
         Optional<Note> foundNote = noteRepository.findTaskById(id);
         if(foundNote.isPresent()){
@@ -81,6 +86,7 @@ public class NoteController {
      * @return статус удаления записи
      */
     @DeleteMapping("/{id}")
+    @TrackNoteAction
     public ResponseEntity<Note> deleteNote(@PathVariable Long id){
         Optional<Note> foundNote = noteRepository.findTaskById(id);
         if(foundNote.isPresent()){
